@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Light Mode - High-Tech Electronics Theme */
+    --background: 210 30% 98%;
+    --foreground: 220 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+
+    /* Electric Blue Primary */
+    --primary: 207 90% 54%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 207 100% 65%;
+
+    /* Cyber Green Secondary */
+    --secondary: 160 100% 50%;
+    --secondary-foreground: 220 20% 15%;
+
+    --muted: 210 30% 94%;
+    --muted-foreground: 220 15% 45%;
+
+    --accent: 174 100% 50%;
+    --accent-foreground: 220 20% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 25% 88%;
+    --input: 214 25% 92%;
+    --ring: 207 90% 54%;
+
+    --radius: 0.75rem;
+
+    /* High-Tech Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(207 90% 54%), hsl(174 100% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(207 90% 54%) 0%, hsl(160 100% 50%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(210 30% 98%) 0%, hsl(207 90% 96%) 100%);
+    --gradient-circuit: linear-gradient(45deg, hsl(207 90% 54% / 0.1), hsl(174 100% 50% / 0.1));
+    --gradient-neon: linear-gradient(90deg, hsl(207 90% 54%), hsl(174 100% 50%), hsl(160 100% 50%));
+    
+    /* Neon Glow Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(220 20% 20% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 20% 20% / 0.1), 0 0 10px hsl(207 90% 54% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 20% 20% / 0.1), 0 0 20px hsl(207 90% 54% / 0.15);
+    --shadow-glow: 0 0 30px hsl(207 90% 54% / 0.5), 0 0 60px hsl(207 90% 54% / 0.3);
+    --shadow-neon: 0 0 20px hsl(174 100% 50% / 0.6), 0 0 40px hsl(174 100% 50% / 0.4), 0 0 60px hsl(174 100% 50% / 0.2);
+    --shadow-cyber: 0 0 15px hsl(160 100% 50% / 0.6), 0 0 30px hsl(160 100% 50% / 0.4);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    /* Dark Mode - Cyberpunk Electronics Theme */
+    --background: 220 40% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 35% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 35% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Electric Blue Primary */
+    --primary: 207 90% 54%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 207 100% 65%;
+
+    /* Cyber Green Secondary */
+    --secondary: 160 100% 50%;
+    --secondary-foreground: 220 40% 5%;
+
+    --muted: 220 35% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 174 100% 50%;
+    --accent-foreground: 220 40% 5%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 30% 18%;
+    --input: 220 30% 15%;
+    --ring: 207 90% 54%;
+
+    /* Dark High-Tech Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(207 90% 54%), hsl(174 100% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 40% 5%) 0%, hsl(220 35% 10%) 50%, hsl(207 90% 20%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(220 40% 5%) 0%, hsl(220 35% 8%) 100%);
+    --gradient-circuit: linear-gradient(45deg, hsl(207 90% 54% / 0.15), hsl(174 100% 50% / 0.15));
+    --gradient-neon: linear-gradient(90deg, hsl(207 90% 54%), hsl(174 100% 50%), hsl(160 100% 50%));
+    
+    /* Enhanced Neon Glow Shadows for Dark Mode */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3), 0 0 5px hsl(207 90% 54% / 0.2);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 0 15px hsl(207 90% 54% / 0.3);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.5), 0 0 25px hsl(207 90% 54% / 0.4);
+    --shadow-glow: 0 0 40px hsl(207 90% 54% / 0.7), 0 0 80px hsl(207 90% 54% / 0.5), 0 0 120px hsl(207 90% 54% / 0.3);
+    --shadow-neon: 0 0 25px hsl(174 100% 50% / 0.8), 0 0 50px hsl(174 100% 50% / 0.6), 0 0 75px hsl(174 100% 50% / 0.4);
+    --shadow-cyber: 0 0 20px hsl(160 100% 50% / 0.8), 0 0 40px hsl(160 100% 50% / 0.6), 0 0 60px hsl(160 100% 50% / 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground relative;
+    background-image: 
+      repeating-linear-gradient(0deg, hsl(var(--primary) / 0.03) 0px, transparent 1px, transparent 2px, hsl(var(--primary) / 0.03) 3px),
+      repeating-linear-gradient(90deg, hsl(var(--primary) / 0.03) 0px, transparent 1px, transparent 2px, hsl(var(--primary) / 0.03) 3px);
+    background-size: 30px 30px;
+  }
+}
+
+@layer utilities {
+  /* Circuit line animation */
+  @keyframes circuit-flow {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateX(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(10px);
+    }
+  }
+
+  /* Neon pulse animation */
+  @keyframes neon-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.5), 0 0 90px hsl(var(--primary) / 0.3);
+    }
+  }
+
+  /* Glow text animation */
+  @keyframes glow-text {
+    0%, 100% {
+      text-shadow: 0 0 10px hsl(var(--primary) / 0.5), 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      text-shadow: 0 0 20px hsl(var(--primary) / 0.8), 0 0 40px hsl(var(--primary) / 0.5), 0 0 60px hsl(var(--primary) / 0.3);
+    }
+  }
+
+  /* Cyber scan animation */
+  @keyframes cyber-scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .circuit-flow {
+    animation: circuit-flow 3s ease-in-out infinite;
+  }
+
+  .neon-pulse {
+    animation: neon-pulse 2s ease-in-out infinite;
+  }
+
+  .glow-text {
+    animation: glow-text 2s ease-in-out infinite;
+  }
+
+  .cyber-scan {
+    animation: cyber-scan 3s linear infinite;
+  }
+
+  /* Utility classes for tech theme */
+  .neon-border {
+    border: 1px solid hsl(var(--primary));
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5), inset 0 0 10px hsl(var(--primary) / 0.2);
+  }
+
+  .circuit-pattern {
+    background-image: 
+      linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px),
+      linear-gradient(180deg, hsl(var(--primary) / 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .tech-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--secondary) / 0.2));
+  }
+}
+
