@@ -10,23 +10,15 @@ interface ThemeStore {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set) => ({
-      isDark: false,
-      toggleTheme: () => set((state) => {
-        const newIsDark = !state.isDark;
-        if (newIsDark) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-        return { isDark: newIsDark };
-      }),
+      isDark: true, // Always dark mode
+      toggleTheme: () => {
+        // Do nothing - dark mode only
+        document.documentElement.classList.add('dark');
+      },
       setTheme: (isDark) => {
-        if (isDark) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-        set({ isDark });
+        // Always force dark mode
+        document.documentElement.classList.add('dark');
+        set({ isDark: true });
       },
     }),
     {

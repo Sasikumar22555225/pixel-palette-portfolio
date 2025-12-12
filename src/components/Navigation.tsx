@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -39,9 +38,8 @@ export const Navigation = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-lg shadow-md" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg shadow-md" : "bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -68,12 +66,10 @@ export const Navigation = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
               </motion.button>
             ))}
-            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
             <Button
               variant="ghost"
               size="icon"
