@@ -27,19 +27,35 @@ export const Navigation = () => {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-    }
+    const element = document.querySelector(href) as HTMLElement | null;
+    if (!element) return;
+
+    const navHeight = document.querySelector("nav")?.clientHeight ?? 0;
+    const elementTop =
+      element.getBoundingClientRect().top + window.pageYOffset;
+
+    window.scrollTo({
+      top: elementTop - navHeight,
+      behavior: "smooth",
+    });
+
+    // ✅ CRITICAL FIX: delay menu close to avoid scroll cancel on Samsung
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 300); // matches motion height animation
+    });
   };
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/95 backdrop-blur-lg shadow-lg" : "bg-background/80 backdrop-blur-md"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/95 backdrop-blur-lg shadow-lg"
+          : "bg-background/80 backdrop-blur-md"
+      }`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
@@ -123,11 +139,12 @@ export const Navigation = () => {
                   {navItems.map((item, index) => (
                     <motion.button
                       key={item.name}
+                      type="button"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
                       onClick={() => scrollToSection(item.href)}
-                      className="text-left text-foreground hover:text-primary hover:bg-primary/10 transition-all py-3 px-4 rounded-md font-medium"
+                      className="text-left text-foreground hover:text-primary hover:bg-primary/10 transition-all py-3 px-4 rounded-md font-medium cursor-pointer"
                     >
                       {item.name}
                     </motion.button>
