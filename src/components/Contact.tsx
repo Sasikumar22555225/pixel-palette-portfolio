@@ -1,12 +1,10 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +18,6 @@ import {
 } from "@/components/ui/form";
 import { Send, Mail, MapPin, Phone } from "lucide-react";
 import contactPackets from "@/assets/contact-packets.jpg";
-
 import emailjs from "@emailjs/browser";
 
 const formSchema = z.object({
@@ -35,6 +32,11 @@ export const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", message: "" },
@@ -43,23 +45,18 @@ export const Contact = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_messages").insert([
-        { name: values.name, email: values.email, message: values.message },
-      ]);
-
-      if (error) throw error;
-
-      await emailjs.send(
-        "service_ou2jqvq",
-        "template_lgfi6bc",
+      const emailResult = await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
           from_name: values.name,
           from_email: values.email,
           message: values.message,
           to_email: "rsasikbeece1702@gmail.com",
-        },
-        "uix25K1R152e0JhnK"
+        }
       );
+
+      console.log("EmailJS success:", emailResult);
 
       toast({
         title: "Message Sent!",
@@ -67,10 +64,11 @@ export const Contact = () => {
       });
 
       form.reset();
-    } catch (error) {
+    } catch (err) {
+      console.error("Contact error:", err);
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: "Failed to send message. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -81,8 +79,8 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-subtle relative overflow-hidden"
       ref={ref}
+      className="py-20 bg-gradient-subtle relative overflow-hidden"
       style={{
         backgroundImage: `url(${contactPackets})`,
         backgroundSize: "cover",
@@ -91,7 +89,6 @@ export const Contact = () => {
       }}
     >
       <div className="absolute inset-0 bg-background/90 backdrop-blur-sm" />
-
       <div className="absolute inset-0 circuit-pattern opacity-10 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -106,7 +103,6 @@ export const Contact = () => {
           <div className="w-20 h-1 bg-gradient-neon mx-auto mb-12 rounded-full neon-pulse" />
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-            
             {/* LEFT SIDE CONTACT INFO */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -140,11 +136,8 @@ export const Contact = () => {
                         >
                           <item.icon className="w-6 h-6 text-white" />
                         </motion.div>
-
                         <div>
                           <p className="text-sm text-muted-foreground">{item.title}</p>
-
-                          {/* CLICKABLE EMAIL / PHONE */}
                           {item.link ? (
                             <a
                               href={item.link}
@@ -156,7 +149,6 @@ export const Contact = () => {
                             <p className="font-semibold text-foreground">{item.value}</p>
                           )}
                         </div>
-
                       </div>
                     </Card>
                   </motion.div>
@@ -173,7 +165,6 @@ export const Contact = () => {
               <Card className="p-8 neon-border bg-card/50 backdrop-blur-sm shadow-glow">
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    
                     <FormField
                       control={form.control}
                       name="name"
@@ -191,7 +182,6 @@ export const Contact = () => {
                         </FormItem>
                       )}
                     />
-
                     <FormField
                       control={form.control}
                       name="email"
@@ -210,7 +200,6 @@ export const Contact = () => {
                         </FormItem>
                       )}
                     />
-
                     <FormField
                       control={form.control}
                       name="message"
@@ -229,7 +218,6 @@ export const Contact = () => {
                         </FormItem>
                       )}
                     />
-
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button
                         type="submit"
@@ -251,12 +239,10 @@ export const Contact = () => {
                         )}
                       </Button>
                     </motion.div>
-
                   </form>
                 </Form>
               </Card>
             </motion.div>
-
           </div>
         </motion.div>
       </div>
